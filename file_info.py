@@ -1,0 +1,28 @@
+import requests
+
+# Токен доступа и заголовки
+access_token = 'eyJ0eXAiOiJKV1QiLCJub25jZSI6Im1TQnlJRTRvX2ROWnhCSEJPX05XbWdUSUx2dlYwLXRUaDBhX3BnVlRUdWMiLCJhbGciOiJSUzI1NiIsIng1dCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyIsImtpZCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyJ9.eyJhdWQiOiJodHRwczovL2dyYXBoLm1pY3Jvc29mdC5jb20iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8yZDliZTVlYy0yZjVmLTRkMmYtOGE0OS02NzE4OWQ3MzM3YzUvIiwiaWF0IjoxNzI2NjcyNDU3LCJuYmYiOjE3MjY2NzI0NTcsImV4cCI6MTcyNjY3NjM1NywiYWlvIjoiRTJkZ1lLaUtmL3ppbytqU2lYMWk5OU4wM2lTYUF3QT0iLCJhcHBfZGlzcGxheW5hbWUiOiJ0ZXN0IiwiYXBwaWQiOiJhMGIyMjkyNy1mYzAwLTRlOTMtODA2Yy0yZjA4NTViODFhODciLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8yZDliZTVlYy0yZjVmLTRkMmYtOGE0OS02NzE4OWQ3MzM3YzUvIiwiaWR0eXAiOiJhcHAiLCJvaWQiOiJjMDljZTA2MS05Y2Q2LTQ2NTEtODM5Yi01YTY3ZjlmM2QwOTIiLCJyaCI6IjAuQVU0QTdPV2JMVjh2TDAyS1NXY1luWE0zeFFNQUFBQUFBQUFBd0FBQUFBQUFBQUJPQUFBLiIsInJvbGVzIjpbIkZpbGVzLlJlYWRXcml0ZS5BcHBGb2xkZXIiLCJTaXRlcy5TZWxlY3RlZCIsIkZpbGVzLlNlbGVjdGVkT3BlcmF0aW9ucy5TZWxlY3RlZCIsIlNpdGVzLlJlYWQuQWxsIiwiU2l0ZXMuUmVhZFdyaXRlLkFsbCIsIlNpdGVzLk1hbmFnZS5BbGwiLCJGaWxlcy5SZWFkV3JpdGUuQWxsIiwiRmlsZXMuUmVhZC5BbGwiLCJTaXRlcy5GdWxsQ29udHJvbC5BbGwiXSwic3ViIjoiYzA5Y2UwNjEtOWNkNi00NjUxLTgzOWItNWE2N2Y5ZjNkMDkyIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6IkVVIiwidGlkIjoiMmQ5YmU1ZWMtMmY1Zi00ZDJmLThhNDktNjcxODlkNzMzN2M1IiwidXRpIjoicFVOU2Z1VHBta2lWcUVNU3lDYTNBQSIsInZlciI6IjEuMCIsIndpZHMiOlsiMDk5N2ExZDAtMGQxZC00YWNiLWI0MDgtZDVjYTczMTIxZTkwIl0sInhtc19pZHJlbCI6IjcgMTYiLCJ4bXNfdGNkdCI6MTY0NDkzMDUzNH0.WPI9lxOIXE0XB2XLlJiBc-UK6aVs_1qVRorBIp7b1IL-3jyMT_Krc6VUrxIZ9QMCPDUZSnk0UTp_n3tE-Ly9kY1JurNNn6zoahTi_RZkBBQ63lGnk4qnojn5Ny73zIfwZiXgVkMFwv6VdgGDt1SzOyqVD5vWO0Tm3rkA8mx44SY6tgPJXF5YVXr9LvpQZgp69iIoug-TCESwBKhabOhHLerPnYhntzMCtRf9mQf1qzB0cDh_3kUCLXqG_u27fAmXbhflm2nDAS53916j44Bitm9wBdmf-m18Z4ok4RtwcirNR2jAyuw7nD-GZnUqdfSal2HhiYVId5EmDE69NcJShw'
+
+headers = {
+    'Authorization': f'Bearer {access_token}',
+    'Content-Type': 'application/json'
+}
+
+# ID файла, который нужно проверить
+file_id = "01MTWC63BFELBTDX6G4RH34SYBWRILGA2K"
+
+# URL для получения информации о файле
+info_url = f"https://graph.microsoft.com/v1.0/drives/b!aKxyVq6UFUeI-D8MoUwsVENKI0kMsOpIvUW-j41pAbO7NcvkVmEnQI-WV7f7BdWD/items/{file_id}"
+
+# Выполняем GET запрос для получения информации о файле
+response = requests.get(info_url, headers=headers)
+
+if response.status_code == 200:
+    file_info = response.json()
+    print("Информация о файле:")
+    print(f"ID: {file_info['id']}")
+    print(f"Название: {file_info['name']}")
+    print(f"Тип: {file_info['file']['mimeType']}")
+    print(f"Размер: {file_info['size']} байт")
+else:
+    print(f"Ошибка при получении информации о файле: {response.status_code}, {response.text}")
