@@ -1,0 +1,17 @@
+# .github/workflows/scheduled-task.yml
+name: Scheduled Task
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Выполнять каждый час
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run script
+        run: python3 /Users/aruka/PycharmProjects/MediaVector/get_token.py
