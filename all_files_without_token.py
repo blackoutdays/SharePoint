@@ -3,6 +3,7 @@ import io
 import pandas as pd
 import openai
 
+#токен вручную генерировать и менять надо. лучше файл all_files_with_token
 access_token = 'eyJ0eXAiOiJKV1QiLCJub25jZSI6IlNDM25YeW1LSW1qTTFLNk9TbFU4c2ozNE1OcDZ1U1hURFpuUm5oTGVCSzgiLCJhbGciOiJSUzI1NiIsIng1dCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyIsImtpZCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyJ9.eyJhdWQiOiJodHRwczovL2dyYXBoLm1pY3Jvc29mdC5jb20iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8yZDliZTVlYy0yZjVmLTRkMmYtOGE0OS02NzE4OWQ3MzM3YzUvIiwiaWF0IjoxNzI2NzQ2MTYzLCJuYmYiOjE3MjY3NDYxNjMsImV4cCI6MTcyNjc1MDA2MywiYWlvIjoiRTJkZ1lGQ2J1T1NoMmJrdHEyTENuNTU0K0V1ckF3QT0iLCJhcHBfZGlzcGxheW5hbWUiOiJ0ZXN0IiwiYXBwaWQiOiJhMGIyMjkyNy1mYzAwLTRlOTMtODA2Yy0yZjA4NTViODFhODciLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8yZDliZTVlYy0yZjVmLTRkMmYtOGE0OS02NzE4OWQ3MzM3YzUvIiwiaWR0eXAiOiJhcHAiLCJvaWQiOiJjMDljZTA2MS05Y2Q2LTQ2NTEtODM5Yi01YTY3ZjlmM2QwOTIiLCJyaCI6IjAuQVU0QTdPV2JMVjh2TDAyS1NXY1luWE0zeFFNQUFBQUFBQUFBd0FBQUFBQUFBQUJPQUFBLiIsInJvbGVzIjpbIkZpbGVzLlJlYWRXcml0ZS5BcHBGb2xkZXIiLCJTaXRlcy5TZWxlY3RlZCIsIkZpbGVzLlNlbGVjdGVkT3BlcmF0aW9ucy5TZWxlY3RlZCIsIlNpdGVzLlJlYWQuQWxsIiwiU2l0ZXMuUmVhZFdyaXRlLkFsbCIsIlNpdGVzLk1hbmFnZS5BbGwiLCJGaWxlcy5SZWFkV3JpdGUuQWxsIiwiRmlsZXMuUmVhZC5BbGwiLCJTaXRlcy5GdWxsQ29udHJvbC5BbGwiXSwic3ViIjoiYzA5Y2UwNjEtOWNkNi00NjUxLTgzOWItNWE2N2Y5ZjNkMDkyIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6IkVVIiwidGlkIjoiMmQ5YmU1ZWMtMmY1Zi00ZDJmLThhNDktNjcxODlkNzMzN2M1IiwidXRpIjoiWUFxcWowMzZhVXk4UW43ZTNBb1lBQSIsInZlciI6IjEuMCIsIndpZHMiOlsiMDk5N2ExZDAtMGQxZC00YWNiLWI0MDgtZDVjYTczMTIxZTkwIl0sInhtc19pZHJlbCI6IjcgMTQiLCJ4bXNfdGNkdCI6MTY0NDkzMDUzNH0.QKgsp6UW1haLbONmskWPPsI_pUW5n7RHvQOoDIiVer4xNGPMl4KUnvHVSEjK8Q8eY96oHHDgp4x3ktKqrWuOjCUKlaElEu8wllAEPvMg2liM6CjSBpVlMliSnvu376RBaOS-LxX1vQxZw6jpKBMaLOHm25L0dfjPR3sR_yl_NdFGDoTv8R_Txs9meAjLDQHS0cUxYYzyipTEunSyLvmfcLh_v4geY8H2_WUrcHaN9kVV7AiX1YM0nb6KFtAROUccW088g6rsDyKDcWvLstuXnX-oT8hBR_UrCYmqg-PPu5G2T_X3pUcyuCjQzQziozHH1EmKYsv0uG9P1y1J4o0o9A'
 openai.api_key = 'sk-proj-PixdJF0ZmrMTxOP06A7UT3BlbkFJb0rxwyiWvCicwx7lJZ6v'
 
@@ -23,7 +24,7 @@ def list_files_in_folder(folder_id):
     response.raise_for_status()
     return response.json().get('value', [])
 
-# Загрузка файла из SharePoint/OneDrive
+# Загрузка файла из MediaVector/OneDrive
 def download_file(file_id):
     url = f"https://graph.microsoft.com/v1.0/drives/{drive_id}/items/{file_id}/content"
     response = requests.get(url, headers=headers)
@@ -52,7 +53,7 @@ def process_file(file_stream):
         df['Вывод'] = df['Сниппет'].apply(lambda x: generate_summary(x) if pd.notnull(x) else '')
     return df
 
-# Сохранение обработанного файла обратно в SharePoint/OneDrive
+# Сохранение обработанного файла обратно в MediaVector/OneDrive
 def upload_file(df, file_name):
     output = io.BytesIO()
     df.to_excel(output, index=False, engine='openpyxl')

@@ -1,6 +1,6 @@
 import requests
+#Генерирует токен для входа
 
-# Генерирует токен для входа
 client_id = "a0b22927-fc00-4e93-806c-2f0855b81a87"
 client_secret = "jD-8Q~1iDIVSmAcwgPyJHZA1rRGlxP1M6PgSWdsq"
 tenant_id = "2d9be5ec-2f5f-4d2f-8a49-67189d7337c5"

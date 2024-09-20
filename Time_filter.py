@@ -4,6 +4,8 @@ import pandas as pd
 import openai
 from datetime import datetime, timedelta, timezone
 
+#Обрабатываем файлы именно по дате редактированию файла
+
 client_id = "a0b22927-fc00-4e93-806c-2f0855b81a87"
 client_secret = "jD-8Q~1iDIVSmAcwgPyJHZA1rRGlxP1M6PgSWdsq"
 tenant_id = "2d9be5ec-2f5f-4d2f-8a49-67189d7337c5"
@@ -67,7 +69,7 @@ def generate_summary(text):
 
 def filter_recent_files(files):
     today = datetime.now().date()  # Текущая дата без времени
-    seven_days_ago = today - timedelta(days=2)  # Дата 7 дней назад
+    seven_days_ago = today - timedelta(days=7)  # Дата 7 дней назад
 
     recent_files = []
 

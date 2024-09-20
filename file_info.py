@@ -1,7 +1,26 @@
 import requests
 
-# Токен доступа и заголовки
-access_token = 'eyJ0eXAiOiJKV1QiLCJub25jZSI6Im1TQnlJRTRvX2ROWnhCSEJPX05XbWdUSUx2dlYwLXRUaDBhX3BnVlRUdWMiLCJhbGciOiJSUzI1NiIsIng1dCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyIsImtpZCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyJ9.eyJhdWQiOiJodHRwczovL2dyYXBoLm1pY3Jvc29mdC5jb20iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8yZDliZTVlYy0yZjVmLTRkMmYtOGE0OS02NzE4OWQ3MzM3YzUvIiwiaWF0IjoxNzI2NjcyNDU3LCJuYmYiOjE3MjY2NzI0NTcsImV4cCI6MTcyNjY3NjM1NywiYWlvIjoiRTJkZ1lLaUtmL3ppbytqU2lYMWk5OU4wM2lTYUF3QT0iLCJhcHBfZGlzcGxheW5hbWUiOiJ0ZXN0IiwiYXBwaWQiOiJhMGIyMjkyNy1mYzAwLTRlOTMtODA2Yy0yZjA4NTViODFhODciLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8yZDliZTVlYy0yZjVmLTRkMmYtOGE0OS02NzE4OWQ3MzM3YzUvIiwiaWR0eXAiOiJhcHAiLCJvaWQiOiJjMDljZTA2MS05Y2Q2LTQ2NTEtODM5Yi01YTY3ZjlmM2QwOTIiLCJyaCI6IjAuQVU0QTdPV2JMVjh2TDAyS1NXY1luWE0zeFFNQUFBQUFBQUFBd0FBQUFBQUFBQUJPQUFBLiIsInJvbGVzIjpbIkZpbGVzLlJlYWRXcml0ZS5BcHBGb2xkZXIiLCJTaXRlcy5TZWxlY3RlZCIsIkZpbGVzLlNlbGVjdGVkT3BlcmF0aW9ucy5TZWxlY3RlZCIsIlNpdGVzLlJlYWQuQWxsIiwiU2l0ZXMuUmVhZFdyaXRlLkFsbCIsIlNpdGVzLk1hbmFnZS5BbGwiLCJGaWxlcy5SZWFkV3JpdGUuQWxsIiwiRmlsZXMuUmVhZC5BbGwiLCJTaXRlcy5GdWxsQ29udHJvbC5BbGwiXSwic3ViIjoiYzA5Y2UwNjEtOWNkNi00NjUxLTgzOWItNWE2N2Y5ZjNkMDkyIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6IkVVIiwidGlkIjoiMmQ5YmU1ZWMtMmY1Zi00ZDJmLThhNDktNjcxODlkNzMzN2M1IiwidXRpIjoicFVOU2Z1VHBta2lWcUVNU3lDYTNBQSIsInZlciI6IjEuMCIsIndpZHMiOlsiMDk5N2ExZDAtMGQxZC00YWNiLWI0MDgtZDVjYTczMTIxZTkwIl0sInhtc19pZHJlbCI6IjcgMTYiLCJ4bXNfdGNkdCI6MTY0NDkzMDUzNH0.WPI9lxOIXE0XB2XLlJiBc-UK6aVs_1qVRorBIp7b1IL-3jyMT_Krc6VUrxIZ9QMCPDUZSnk0UTp_n3tE-Ly9kY1JurNNn6zoahTi_RZkBBQ63lGnk4qnojn5Ny73zIfwZiXgVkMFwv6VdgGDt1SzOyqVD5vWO0Tm3rkA8mx44SY6tgPJXF5YVXr9LvpQZgp69iIoug-TCESwBKhabOhHLerPnYhntzMCtRf9mQf1qzB0cDh_3kUCLXqG_u27fAmXbhflm2nDAS53916j44Bitm9wBdmf-m18Z4ok4RtwcirNR2jAyuw7nD-GZnUqdfSal2HhiYVId5EmDE69NcJShw'
+#Вывод инфо файла по ID, name, type, size
+client_id = "a0b22927-fc00-4e93-806c-2f0855b81a87"
+client_secret = "jD-8Q~1iDIVSmAcwgPyJHZA1rRGlxP1M6PgSWdsq"
+tenant_id = "2d9be5ec-2f5f-4d2f-8a49-67189d7337c5"
+scope = 'https://graph.microsoft.com/.default'
+token_url = f'https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token'
+
+def get_access_token():
+    data = {
+        'client_id': client_id,
+        'client_secret': client_secret,
+        'scope': scope,
+        'grant_type': 'client_credentials'
+    }
+    response = requests.post(token_url, data=data)
+    if response.status_code == 200:
+        return response.json().get('access_token')
+    else:
+        raise Exception(f"Error retrieving access token: {response.status_code}, {response.text}")
+
+access_token = get_access_token()
 
 headers = {
     'Authorization': f'Bearer {access_token}',
