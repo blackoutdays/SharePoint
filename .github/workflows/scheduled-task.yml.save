@@ -3,18 +3,23 @@ name: Scheduled Task
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Выполнять каждый час
+    - cron: '25 9 * * *'  # Запуск каждый час
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Run script
-        run: python3 /Users/aruka/PycharmProjects/MediaVector/get_token.py
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
 
-
+    - name: Run script
+      run: |
+        cd MediaVector
+        python3 get_token.py
 
